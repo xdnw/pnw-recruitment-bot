@@ -12,6 +12,8 @@ __description__ = "A Python recruiter for Politics and War"
 
 
 def get_inputs():
+    usrnme = input("Please enter your Politics and War login email!\n")
+    psswrd = input("Please enter your Politics and War login password!\n")
     apikey = input("Please enter your Politics and War api key!\n")
 
     try:
@@ -31,8 +33,8 @@ def get_inputs():
     save_inputs(usrnme, psswrd, apikey, mincit, sndtaa)
 
 
-def save_inputs(usrnme, psswrd, apikey, mincit, sndtaa):
-    data = {"lgusr": usrnme, "lgpsw": psswrd, "apiky": apikey, "mncit": mincit, "tgtaa": sndtaa}
+def save_inputs(apikey, mincit, sndtaa):
+    data = {"apiky": apikey, "mncit": mincit, "tgtaa": sndtaa}
 
     with open("credentials.json", "w") as result:
         json.dump(data, result)
@@ -43,7 +45,7 @@ def get_credentials():
         try:
             with open('credentials.json') as result:
                 crds = json.load(result)
-                return crds["lgusr"], crds["lgpsw"], crds["apiky"], int(crds["mncit"]), int(crds["tgtaa"])
+                return crds["apiky"], int(crds["mncit"]), int(crds["tgtaa"])
         except (FileNotFoundError, KeyError, ValueError):
             get_inputs()
 
@@ -136,7 +138,7 @@ def runner():
 
 
 def run():
-    lgusr, lgpsw, apiky, mncit, tgtaa = get_credentials()
+    apiky, mncit, tgtaa = get_credentials()
     print("Credentials Retrieved")
     sub, msg = get_message()
     print("Message and Subject Retrieved")
